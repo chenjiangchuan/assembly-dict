@@ -1,0 +1,12 @@
+Add with Carry，进位的加法指令，r1 + r2 + C，会影响 NZCV 标志位加法指令Add Set，和 ADD 一样，但会影响 NZCV 标志位Always，无条件执行按位与和AND类似，但会影响 NZCV 标志位Arithmetic Shift Right，算术右移指令，最低位会被丢弃，最高位会按照符号进行扩展Bit Clear，位清除Bit Field Insert，位段插入操作指令Carry，进位标志位Carry Clear / Unsigned Lower，没有发生无符号溢出，C == 0Compare Negative，CMP 的变种，CMN 用来将一个数与另一个数的相反数进行比较
+CMN op1, op2
+status = op_1 - (- op_2)Compare，比较两个数的大小，内部调用 SUBS 指令来实现Carry Set / Unsigned Higher or Same，发生了无符号溢出，C == 1Conditional Select，条件选择指令，
+CSEL X7, X2, X0, EQ
+if (cond == true) X7 = X2, else X7 = X0Conditional Set，条件置位指令，
+CSET W2, HS
+if (cond == true) W2 = 1, else W2 = 0Conditional Select Increment，条件选择并增加指令，
+CSINC X7, X2, X0, EQ
+if (cond == true) X7 = X2, else X7 = (X0 + #1)Exclusive OR Shifted Register，异或，
+0 异或任何数 = 任何数；
+1 异或任何数 = 任何数取反；
+任何数异或自己都等于 0Equal，相等， Z == 1Frame Pointer，帧指针寄存器，指向栈底的寄存器（X29）Greater Than or Equal，有符号大于或等于，N == VGreater Than，有符号大于，Z == 0 && N == VUnsigned Higher，无符号数大于，C == 1 && Z == 0Load Pair，读取一对内存地址中的数据分别到两个寄存器中Load Register，从存储中加载数据到寄存器中Load Register Byte，数据加载指令，单位为字节（8 Bit / 1 Byte）Load Register Halfword，数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Byte，有符号的加载指令，单位为字节（8 Bit / 1 Byte）Load Register Sign Halfword，有符号的数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Word，有符号的数据加载指令，单位为字（32 Bit / 4 Byte）Lower Than or Equal，有符号小于或等于，Z == 1 || N != VLink Register，链接寄存器（X30）Unsigned Lower or Same，无符号小于或等于， C == 0 && Z == 1Logical Shift Left，逻辑左移指令，最高位会被丢弃，最低位补 0Logical Shift Right，逻辑右移指令，最低位被丢弃，最高位补 0Lower Than，有符号小于，N != VMinus，负的，N == 1Move，寄存器之间的搬移和立即数搬移Negative，负数标志位Not Equal，不相等，Z == 0OR Shifted Register，按位或Program Counter，程序计数器，用来存储将要执行的下一条指令的内存地址Positive or Zero，正或零，N == 0Rotate Right，循环右移指令，最低位会移动到最高位Subduction with Carry，进位的减法指令，r1 + NOT(r2) + C，会影响 NZCV 标志位Stack Pointer，栈指针寄存器，指向栈的顶部（X31）Store Pair，将两个寄存器的数据分别存储到连续的内存地址中Store Register，将寄存器的数据写入到存储器中Store Register Byte，数据存储指令，单位为字节（32 bit / 4 byte）Store Register Halfword，数据存储指令，单位为半字（16 Bit / 2 Byte）Subduction，减法指令Subduction Set，SUB 的变种，r1 + NOT(r2) + 1，会影响 NZCV 标志位Overflow，有符号溢出标志位Overflow Clear，未溢出，V == 0Overflow Set，溢出，V == 1t32 Bit 的零寄存器64 Bit 的零寄存器Zero，零标志位

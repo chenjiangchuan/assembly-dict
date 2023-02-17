@@ -1,0 +1,58 @@
+ADC	Add with Carry，进位的加法指令，r1 + r2 + C，会影响 NZCV 标志位
+ADD	加法指令
+ADDS	Add Set，和 ADD 一样，但会影响 NZCV 标志位
+AND	按位与
+ANDS	和AND类似，但会影响 NZCV 标志位
+AL	Always，无条件执行
+ASR	Arithmetic Shift Right，算术右移指令，最低位会被丢弃，最高位会按照符号进行扩展
+BIC	Bit Clear，位清除
+BIF	Bit Field Insert，位段插入操作指令
+C	Carry，进位标志位
+CC/LO	Carry Clear / Unsigned Lower，没有发生无符号溢出，C == 0
+CMP	Compare，比较两个数的大小，内部调用 SUBS 指令来实现
+CMN	Compare Negative，CMP 的变种，CMN 用来将一个数与另一个数的相反数进行比较\nCMN op1, op2\nstatus = op_1 - (- op_2)
+CS/HS	Carry Set / Unsigned Higher or Same，发生了无符号溢出，C == 1
+CSEL	Conditional Select，条件选择指令，\nCSEL X7, X2, X0, EQ\nif (cond == true) X7 = X2, else X7 = X0
+CSET	Conditional Set，条件置位指令，\nCSET W2, HS\nif (cond == true) W2 = 1, else W2 = 0
+CSINC	Conditional Select Increment，条件选择并增加指令，\nCSINC X7, X2, X0, EQ\nif (cond == true) X7 = X2, else X7 = (X0 + #1)
+EQ	Equal，相等， Z == 1
+EOR	Exclusive OR Shifted Register，异或，\n0 异或任何数 = 任何数；\n1 异或任何数 = 任何数取反；\n任何数异或自己都等于 0
+FP	Frame Pointer，帧指针寄存器，指向栈底的寄存器（X29）
+GE	Greater Than or Equal，有符号大于或等于，N == V
+GT	Greater Than，有符号大于，Z == 0 && N == V
+HI	Unsigned Higher，无符号数大于，C == 1 && Z == 0
+LE	Lower Than or Equal，有符号小于或等于，Z == 1 || N != V
+LDP	Load Pair，读取一对内存地址中的数据分别到两个寄存器中
+LDR	Load Register，从存储中加载数据到寄存器中
+LDRB	Load Register Byte，数据加载指令，单位为字节（8 Bit / 1 Byte）
+LDRH	Load Register Halfword，数据加载指令，单位为半字（16 Bit / 2 Byte）
+LDRSB	Load Register Sign Byte，有符号的加载指令，单位为字节（8 Bit / 1 Byte）
+LDRSH	Load Register Sign Halfword，有符号的数据加载指令，单位为半字（16 Bit / 2 Byte）
+LDRSW	Load Register Sign Word，有符号的数据加载指令，单位为字（32 Bit / 4 Byte）
+LR	Link Register，链接寄存器（X30）
+LS	Unsigned Lower or Same，无符号小于或等于， C == 0 && Z == 1
+LSL	Logical Shift Left，逻辑左移指令，最高位会被丢弃，最低位补 0
+LSR	Logical Shift Right，逻辑右移指令，最低位被丢弃，最高位补 0
+LT	Lower Than，有符号小于，N != V
+MI	Minus，负的，N == 1
+MOV	Move，寄存器之间的搬移和立即数搬移
+N	Negative，负数标志位
+NE	Not Equal，不相等，Z == 0
+ORR	OR Shifted Register，按位或
+PC	Program Counter，程序计数器，用来存储将要执行的下一条指令的内存地址
+PL	Positive or Zero，正或零，N == 0
+ROR	Rotate Right，循环右移指令，最低位会移动到最高位
+SBC	Subduction with Carry，进位的减法指令，r1 + NOT(r2) + C，会影响 NZCV 标志位
+SP	Stack Pointer，栈指针寄存器，指向栈的顶部（X31）
+STP	Store Pair，将两个寄存器的数据分别存储到连续的内存地址中
+STR	Store Register，将寄存器的数据写入到存储器中
+STRB	Store Register Byte，数据存储指令，单位为字节（32 bit / 4 byte）
+STRH	Store Register Halfword，数据存储指令，单位为半字（16 Bit / 2 Byte）
+SUB	Subduction，减法指令
+SUBS	Subduction Set，SUB 的变种，r1 + NOT(r2) + 1，会影响 NZCV 标志位
+V	Overflow，有符号溢出标志位
+VC	Overflow Clear，未溢出，V == 0
+VS	Overflow Set，溢出，V == 1
+WZR	t32 Bit 的零寄存器
+XZR	64 Bit 的零寄存器
+Z	Zero，零标志位
