@@ -1,4 +1,22 @@
-Add with Carry，进位的加法指令，r1 + r2 + C，会影响 NZCV 标志位加法指令Add Set，和 ADD 一样，但会影响 NZCV 标志位Always，无条件执行按位与和AND类似，但会影响 NZCV 标志位Arithmetic Shift Right，算术右移指令，最低位会被丢弃，最高位会按照符号进行扩展Bit Clear，位清除Bit Field Insert，位段插入操作指令Carry，进位标志位Carry Clear / Unsigned Lower，没有发生无符号溢出，C == 0Compare Negative，CMP 的变种，CMN 用来将一个数与另一个数的相反数进行比较
+Add with Carry，进位的加法指令，r1 + r2 + C，会影响 NZCV 标志位加法指令Add Set，和 ADD 一样，但会影响 NZCV 标志位Form PC-relative address，PC相对地址加载指令
+ADR Xd, label
+加载一个在当前PC值±1 MB范围内的label的地址到 Xd 寄存器中PC相对地址加载指令，以页4KB为单位
+ADRP Xd, label
+加载一个在当前PC值一定范围内的label地址到Xd寄存器中，
+这个地址与label所在的地址按4KB对齐（0x8000），偏移量为±4GBAlways，无条件执行对齐方式，.align 3    ;以2^3对齐按位与和AND类似，但会影响 NZCV 标志位定义一个字符串Arithmetic Shift Right，算术右移指令，最低位会被丢弃，最高位会按照符号进行扩展Branch，跳转指令。指令的格式如下。
+B label
+该跳转指令可以在当前PC偏移量±128 MB的范围内无条件地跳转到label处有条件的跳转指令。指令的格式如下。
+B.cond label
+如 B.EQ,该跳转指令可以在当前PC偏移量±1MB的范围内有条件地跳转到label处Bit Field Insert，位段插入操作指令Bit Clear，位清除Branch and Link，链接的意思是包含了调用者的地址，以便子函数返回到正确的地址。
+调用者把参数放到 X0~X7 寄存器中，，然后使用 BL 指令来跳转到子函数中。
+ 调用者在调用 BL 指令时会把当前程序执行的地址（即 PC 值）加上 4，
+保存到 LR（X30寄存器）中，从而保证被调用者返回时能正确链接（回来）到 BL 指令的下一条指令。Section for uninitialized data。未初始化数据部分定义一个字节，并为它分配空间，占一个字节，如：0x34Carry，进位标志位Compare and Branch on Not Zero compares，
+比较并跳转指令。指令的格式如下。
+CBZ Xt, label
+判断X，寄存器是否不为0,若不为0,则跳转到label处，跳转范围是当前PC相对偏移±1MBCompare and Branch on Zero compares，
+比较并跳转指令。指令的格式如下。
+CBZ Xt, label
+判断X，寄存器是否为0,若为0,则跳转到label处，跳转范围是当前PC相对偏移±1MBCarry Clear / Unsigned Lower，没有发生无符号溢出，C == 0Compare Negative，CMP 的变种，CMN 用来将一个数与另一个数的相反数进行比较
 CMN op1, op2
 status = op_1 - (- op_2)Compare，比较两个数的大小，内部调用 SUBS 指令来实现Carry Set / Unsigned Higher or Same，发生了无符号溢出，C == 1Conditional Select，条件选择指令，
 CSEL X7, X2, X0, EQ
@@ -6,7 +24,38 @@ if (cond == true) X7 = X2, else X7 = X0Conditional Set，条件置位指令，
 CSET W2, HS
 if (cond == true) W2 = 1, else W2 = 0Conditional Select Increment，条件选择并增加指令，
 CSINC X7, X2, X0, EQ
-if (cond == true) X7 = X2, else X7 = (X0 + #1)Exclusive OR Shifted Register，异或，
+if (cond == true) X7 = X2, else X7 = (X0 + #1)双字，32 Bit / 4 Byte，一般用Wn存储Exclusive OR Shifted Register，异或，
 0 异或任何数 = 任何数；
 1 异或任何数 = 任何数取反；
-任何数异或自己都等于 0Equal，相等， Z == 1Frame Pointer，帧指针寄存器，指向栈底的寄存器（X29）Greater Than or Equal，有符号大于或等于，N == VGreater Than，有符号大于，Z == 0 && N == VUnsigned Higher，无符号数大于，C == 1 && Z == 0Load Pair，读取一对内存地址中的数据分别到两个寄存器中Load Register，从存储中加载数据到寄存器中Load Register Byte，数据加载指令，单位为字节（8 Bit / 1 Byte）Load Register Halfword，数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Byte，有符号的加载指令，单位为字节（8 Bit / 1 Byte）Load Register Sign Halfword，有符号的数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Word，有符号的数据加载指令，单位为字（32 Bit / 4 Byte）Lower Than or Equal，有符号小于或等于，Z == 1 || N != VLink Register，链接寄存器（X30）Unsigned Lower or Same，无符号小于或等于， C == 0 && Z == 1Logical Shift Left，逻辑左移指令，最高位会被丢弃，最低位补 0Logical Shift Right，逻辑右移指令，最低位被丢弃，最高位补 0Lower Than，有符号小于，N != VMinus，负的，N == 1Move，寄存器之间的搬移和立即数搬移Negative，负数标志位Not Equal，不相等，Z == 0OR Shifted Register，按位或Program Counter，程序计数器，用来存储将要执行的下一条指令的内存地址Positive or Zero，正或零，N == 0Rotate Right，循环右移指令，最低位会移动到最高位Subduction with Carry，进位的减法指令，r1 + NOT(r2) + C，会影响 NZCV 标志位Stack Pointer，栈指针寄存器，指向栈的顶部（X31）Store Pair，将两个寄存器的数据分别存储到连续的内存地址中Store Register，将寄存器的数据写入到存储器中Store Register Byte，数据存储指令，单位为字节（32 bit / 4 byte）Store Register Halfword，数据存储指令，单位为半字（16 Bit / 2 Byte）Subduction，减法指令Subduction Set，SUB 的变种，r1 + NOT(r2) + 1，会影响 NZCV 标志位Overflow，有符号溢出标志位Overflow Clear，未溢出，V == 0Overflow Set，溢出，V == 1t32 Bit 的零寄存器64 Bit 的零寄存器Zero，零标志位
+任何数异或自己都等于 0Equal，相等， Z == 1.equ 给符号赋值
+.equ my_data1, 100
+为 my_data1 符号赋值 100Frame Pointer，帧指针寄存器，指向栈底的寄存器（X29）Greater Than or Equal，有符号大于或等于，N == V定义一个全局符号，通常是为ld使用Greater Than，有符号大于，Z == 0 && N == VUnsigned Higher，无符号数大于，C == 1 && Z == 02 ByteLoad Pair，读取一对内存地址中的数据分别到两个寄存器中Load Register，从存储中加载数据到寄存器中
+LDR X0, [X1]    ;从 X1 中保存的地址加载
+LDR   X0, [X1, #8]    ;从地址[X1 + 8 Byte]加载
+LDR   X0, label    ;把label表示的值加载到寄存器中
+LDR   X0, =imm(立即数)    ; 如果imm立即数为16Bit，或者16Bit立即数左移16Bit、32Bit、48Bit后的立即数（相当于MOV），
+如果不是上述的立即数，就表示加载PC+imm(立即数)内存地址的值
+LDR X0, =label    ;把label对应的地址加载到X0，label是绝对地址，而ADR中的label时相对地址Load Register Byte，数据加载指令，单位为字节（8 Bit / 1 Byte）Load Register Halfword，数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Byte，有符号的加载指令，单位为字节（8 Bit / 1 Byte）Load Register Sign Halfword，有符号的数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Word，有符号的数据加载指令，单位为字（32 Bit / 4 Byte）Load Exclusive Pair of Registers，多字节独占内存访问指令Load Exclusive Register，独占内存访问指令Lower Than or Equal，有符号小于或等于，Z == 1 || N != V定义一个整型，并为它分配空间，占四字节，如：0x12345678Link Register，链接寄存器（X30）Unsigned Lower or Same，无符号小于或等于， C == 0 && Z == 1Logical Shift Left，逻辑左移指令，最高位会被丢弃，最低位补 0Logical Shift Right，逻辑右移指令，最低位被丢弃，最高位补 0Lower Than，有符号小于，N != VLoad Pair，读取一对内存地址中的数据分别到两个寄存器中Load Register，从存储中加载数据到寄存器中
+LDR X0, [X1]    ;从 X1 中保存的地址加载
+LDR   X0, [X1, #8]    ;从地址[X1 + 8 Byte]加载
+LDR   X0, label    ;把label表示的值加载到寄存器中
+LDR   X0, =imm(立即数)    ; 如果imm立即数为16Bit，或者16Bit立即数左移16Bit、32Bit、48Bit后的立即数（相当于MOV），
+如果不是上述的立即数，就表示加载PC+imm(立即数)内存地址的值
+LDR X0, =label    ;把label对应的地址加载到X0，label是绝对地址，而ADR中的label时相对地址Load Register Byte，数据加载指令，单位为字节（8 Bit / 1 Byte）Load Register Halfword，数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Byte，有符号的加载指令，单位为字节（8 Bit / 1 Byte）Load Register Sign Halfword，有符号的数据加载指令，单位为半字（16 Bit / 2 Byte）Load Register Sign Word，有符号的数据加载指令，单位为字（32 Bit / 4 Byte）Load Exclusive Pair of Registers，多字节独占内存访问指令Load Exclusive Register，独占内存访问指令Lower Than or Equal，有符号小于或等于，Z == 1 || N != V定义一个长整型，并为它分配空间，占四字节，如：0x12345678Link Register，链接寄存器（X30）Unsigned Lower or Same，无符号小于或等于， C == 0 && Z == 1Logical Shift Left，逻辑左移指令，最高位会被丢弃，最低位补 0Logical Shift Right，逻辑右移指令，最低位被丢弃，最高位补 0Lower Than，有符号小于，N != V定义一段宏代码，.macro表示代码的开始，.endm表示代码的结束，.exitm跳出宏Minus，负的，N == 1Move，寄存器之间的搬移和立即数搬移Read a system register，
+MRS X0, SCTLR_EL1 MSR SCTLR_EL1, X0
+X0 = SCTLR_EL1Set a system register，
+MSR SCTLR_EL1, X0
+SCTLR_EL1 = X0Negative，负数标志位Not Equal，不相等，Z == 0OR Shifted Register，按位或Program Counter，程序计数器，用来存储将要执行的下一条指令的内存地址Positive or Zero，正或零，N == 0数据定义的伪指令，用来定义数据元素，数据元素的标签为my_data1/my_data2，
+它存储了一个 64 bit的数据.rept和.endr：重复执行伪指令；.rept 3
+.long 0
+.endr
+上述的.rept伪操作会重复“.long 0”指令3次Reset，通常用于子函数的返回，其返回地址保存在LR里Rotate Right，循环右移指令，最低位会移动到最高位Subduction with Carry，进位的减法指令，r1 + NOT(r2) + C，会影响 NZCV 标志位Signed Bitfield Extract，读取寄存器的某些字段和 UBFX 一样，
+但 SBFX 会对符号扩展定义一个短整型，并为它分配空间，占两个字节，如：0x1234Stack Pointer，栈指针寄存器，指向栈的顶部（X31）Store Pair，将两个寄存器的数据分别存储到连续的内存地址中Store Register，将寄存器的数据写入到存储器中Store Register Byte，数据存储指令，单位为字节（8 Bit / 1 Byte）Store Register Halfword，数据存储指令，单位为半字（16 Bit / 2 Byte）数据定义伪指令，用来定义一个字符串Store Exclusive Pair of Registers, returning status。多字节独占内存访问指令Store Exclusive Register, returning status，独占内存访问指令Subduction，减法指令Subduction Set，SUB 的变种，r1 + NOT(r2) + 1，会影响 NZCV 标志位Test bit and Branch if Not Zero compares，测试位并跳转指令。指令的格式如下。
+TBZ R<t>, #imm, label
+判断Rf寄存器中第imm位是否不为0,若不为0,则跳转到label处，
+跳转范围是当前PC相对偏 移量±32 KBTest bit and Branch if Zero compares，测试位并跳转指令。指令的格式如下。
+TBZ R<t>, #imm, label
+判断Rf寄存器中第imm位是否为0,若为0,则跳转到label处，
+跳转范围是当前PC相对偏 移量±32 KBUnsigned Bitfield Extract，
+UBFX <Xd>, <Xn>, #<lsb>, #<width>
+提取Xn寄存器的Bit[lsb, lsb+width-1],然后存储到Xd寄存器中Overflow，有符号溢出标志位Overflow Clear，未溢出，V == 0Overflow Set，溢出，V == 132 Bit / 4 Byte 数据t32 Bit 的零寄存器64 Bit 的零寄存器Zero，零标志位
