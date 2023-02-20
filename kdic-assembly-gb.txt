@@ -32,7 +32,7 @@ equ	.equ 给符号赋值\n.equ my_data1, 100\n为 my_data1 符号赋值 100
 EOR	Exclusive OR Shifted Register，异或，\n0 异或任何数 = 任何数；\n1 异或任何数 = 任何数取反；\n任何数异或自己都等于 0
 FP	Frame Pointer，帧指针寄存器，指向栈底的寄存器（X29）
 GE	Greater Than or Equal，有符号大于或等于，N == V
-global	定义一个全局符号，通常是为ld使用
+global	定义一个全局符号，可以是函数的符号，也可以是全局变量的符号。通常是为ld使用
 GT	Greater Than，有符号大于，Z == 0 && N == V
 HI	Unsigned Higher，无符号数大于，C == 1 && Z == 0
 hword	2 Byte
@@ -96,6 +96,7 @@ STXP	Store Exclusive Pair of Registers, returning status。多字节独占内存
 STXR	Store Exclusive Register, returning status，独占内存访问指令
 SUB	Subduction，减法指令
 SUBS	Subduction Set，SUB 的变种，r1 + NOT(r2) + 1，会影响 NZCV 标志位
+symbol	符号是一个核心的概念。程序员使用符号来命名事物，链接器使用符号来链接，调试器使用符号来调试。\n符号一般用来标记程序或数据的位置，而不用内存地址来标记他们。\n如果使用内存地址来标记，那么程序员必须记住每行代码或数据的内存地址，\n这将是一件很痛苦的事情。
 UBFX	Unsigned Bitfield Extract，\nUBFX <Xd>, <Xn>, #<lsb>, #<width>\n提取Xn寄存器的Bit[lsb, lsb+width-1],然后存储到Xd寄存器中
 TBZ	Test bit and Branch if Zero compares，测试位并跳转指令。指令的格式如下。\nTBZ R<t>, #imm, label\n判断Rf寄存器中第imm位是否为0,若为0,则跳转到label处，\n跳转范围是当前PC相对偏 移量±32 KB
 TBNZ	Test bit and Branch if Not Zero compares，测试位并跳转指令。指令的格式如下。\nTBZ R<t>, #imm, label\n判断Rf寄存器中第imm位是否不为0,若不为0,则跳转到label处，\n跳转范围是当前PC相对偏 移量±32 KB
